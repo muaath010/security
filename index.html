@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المختبر السيبراني التعليمي</title>
+    <style>
+        :root {
+            --neon-green: #00ffcc;
+            --cyber-blue: #0a84ff;
+            --danger-red: #ff3b30;
+            --dark-bg: #050a0f;
+            --card-bg: #111a24;
+            --text-gray: #b0b8c1;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: white;
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+        /* Sidebar Navigation */
+        nav {
+            width: 250px;
+            background-color: #0d141d;
+            border-left: 1px solid #1e2a38;
+            padding: 20px;
+            position: fixed;
+            height: 100%;
+        }
+        nav h2 { color: var(--neon-green); font-size: 1.2rem; margin-bottom: 30px; border-bottom: 1px solid; }
+        nav a {
+            display: block;
+            color: var(--text-gray);
+            padding: 12px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            transition: 0.3s;
+        }
+        nav a:hover, nav a.active {
+            background-color: var(--cyber-blue);
+            color: white;
+        }
+
+        /* Main Content Area */
+        main {
+            margin-right: 250px;
+            padding: 40px;
+            width: 100%;
+        }
+        section { display: none; animation: fadeIn 0.5s; }
+        section.active { display: block; }
+
+        .card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #1e2a38;
+            margin-bottom: 20px;
+        }
+        h1, h2 { color: var(--neon-green); }
+
+        /* Simulation Tools */
+        .simulator {
+            background: #000;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px dashed var(--cyber-blue);
+            margin-top: 15px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: white;
+            border-radius: 4px;
+        }
+        .btn {
+            background: var(--neon-green);
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        /* Password Strength Meter */
+        #meter { height: 10px; width: 100%; background: #333; margin-top: 5px; border-radius: 5px; }
+        #meter-fill { height: 100%; width: 0%; transition: 0.5s; border-radius: 5px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .fake-ad {
+            border: 2px solid gold;
+            padding: 15px;
+            text-align: center;
+            background: linear-gradient(45deg, #222, #444);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h2>المختبر السيبراني</h2>
+        <a href="#" onclick="showSection('home')" class="active">الرئيسية</a>
+        <a href="#" onclick="showSection('social')">الهندسة الاجتماعية</a>
+        <a href="#" onclick="showSection('deepfake')">التزييف العميق</a>
+        <a href="#" onclick="showSection('phishing')">التصيد الاحتيالي</a>
+        <a href="#" onclick="showSection('passwords')">كلمات المرور</a>
+        <a href="#" onclick="showSection('links')">أنواع الروابط</a>
+        <a href="#" onclick="showSection('hacking')">كيف يتم الاختراق؟</a>
+        <a href="#" onclick="showSection('ads')">الإعلانات الزائفة</a>
+    </nav>
+
+    <main>
+        <section id="home" class="active">
+            <h1>مرحباً بك في أسبوع الأمن السيبراني</h1>
+            <p>هذا الموقع صُمم خصيصاً لمجتمعنا المدرسي لنقل الوعي من "النظرية" إلى "التطبيق". استخدم القائمة الجانبية لاستكشاف المعامل الافتراضية.</p>
+            <div class="card">
+                <h3>إحصائية سريعة</h3>
+                <p>95% من حوادث الأمن السيبراني سببها الخطأ البشري. كن أنت الحصن المنيع.</p>
+            </div>
+        </section>
+
+        <section id="social">
+            <h1>الهندسة الاجتماعية (فن اختراق البشر)</h1>
+            <div class="card">
+                <p>لا يحتاج المخترق دائماً لأكواد معقدة، أحياناً يحتاج فقط لاتصال هاتفي مقنع.</p>
+                <div class="simulator">
+                    <h4>محاكاة محادثة:</h4>
+                    <p style="color: #888;">[رسالة واتساب من رقم مجهول]</p>
+                    <p><strong>المهاجم:</strong> "أستاذي، أنا من الدعم الفني للمدرسة، نحتاج كود التحقق الذي وصلك الآن لتحديث نظام الغياب."</p>
+                    <button class="btn" onclick="alert('خطأ! كود التحقق سرّي للغاية ولا يطلبه الدعم الفني أبداً.')">إرسال الكود</button>
+                    <button class="btn" style="background:var(--danger-red)" onclick="alert('أحسنت! تجاهل الرسالة وإبلاغ الإدارة هو التصرف الصحيح.')">حظر وإبلاغ</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="deepfake">
+            <h1>التزييف العميق (Deepfake)</h1>
+            <div class="card">
+                <p>باستخدام الذكاء الاصطناعي، يمكن تزييف الفيديوهات والأصوات بدقة مرعبة.</p>
+                <div class="simulator">
+                    <h4>كيف تكتشف التزييف؟</h4>
+                    <ul>
+                        <li>لاحظ حركة العين (غالباً لا يرمشون بشكل طبيعي).</li>
+                        <li>دقق في حواف الوجه والرقبة.</li>
+                        <li>الصوت قد يبدو آلياً أو به تقطيع غير منطقي.</li>
+                    </ul>
+                    <p><strong>تحدي:</strong> هل تستطيع التمييز بين صورة حقيقية وصورة مولدة بالذكاء الاصطناعي؟ (قريباً في ورشة العمل الميدانية).</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="phishing">
+            <h1>التصيد الاحتيالي (Phishing)</h1>
+            <div class="card">
+                <p>صفحات تسجيل دخول مطابقة للأصل، لكنها تسرق بياناتك.</p>
+                <div class="simulator">
+                    <h4>فخ تسجيل الدخول:</h4>
+                    <label>البريد الإلكتروني الوزاري:</label>
+                    <input type="text" placeholder="user@moe.om">
+                    <label>كلمة المرور:</label>
+                    <input type="password" placeholder="******">
+                    <button class="btn" onclick="showPhishAlert()">دخول</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="passwords">
+            <h1>مقياس قوة كلمة المرور</h1>
+            <div class="card">
+                <p>اختبر كلمة مرورك (المحاكاة لا تحفظ البيانات):</p>
+                <input type="text" id="pwdInput" oninput="checkPass()" placeholder="اكتب كلمة مرور تجريبية هنا...">
+                <div id="meter"><div id="meter-fill"></div></div>
+                <p id="pwdFeedback"></p>
+            </div>
+        </section>
+
+        <section id="links">
+            <h1>أنواع الروابط (أين سيأخذك هذا الرابط؟)</h1>
+            <div class="card">
+                <p>المخترق يستخدم روابط مخفية. مرر الفأرة (أو اضغط) لترى الفرق:</p>
+                <div class="simulator">
+                    <a href="#" style="color:var(--cyber-blue)" onclick="alert('الحقيقة: هذا الرابط يؤدي إلى موقع: malicious-site.com/hack')">www.moe.gov.om/portal</a>
+                    <p><small>(في المتصفح، انظر دائماً لأسفل الشاشة لترى الرابط الحقيقي قبل النقر)</small></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="hacking">
+            <h1>رحلة الهجوم السيبراني</h1>
+            <div class="card">
+                <ol>
+                    <li><strong>الاستطلاع:</strong> جمع معلومات عنك من وسائل التواصل.</li>
+                    <li><strong>التسلل:</strong> إرسال رابط أو ملف ملغوم.</li>
+                    <li><strong>الاستغلال:</strong> السيطرة على الجهاز وسرقة الملفات.</li>
+                </ol>
+                <p style="color:var(--danger-red)"><strong>الوقاية:</strong> تحديث البرامج، تفعيل التحقق الثنائي (2FA).</p>
+            </div>
+        </section>
+
+        <section id="ads">
+            <h1>الإعلانات الزائفة (الربح الوهمي)</h1>
+            <div class="card">
+                <p>تظهر هذه الإعلانات في المواقع غير الموثوقة:</p>
+                <div class="fake-ad" onclick="alert('فخ! الضغط هنا قد يحمل برمجية خبيثة (Adware) على جهازك.')">
+                    <h2 style="color:gold">مبروك! أنت الزائر رقم مليون 🏆</h2>
+                    <p>لقد ربحت هاتف iPhone 15 Pro Max. اضغط لاستلام جائزتك!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function showSection(id) {
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function showPhishAlert() {
+            alert('⚠️ تنبيه أمني: بمجرد إدخال بياناتك هنا، أصبحت كلمة مرورك في يد المخترق! لاحظ أن رابط الموقع بالأعلى ليس الرابط الرسمي للوزارة.');
+        }
+
+        function checkPass() {
+            let val = document.getElementById('pwdInput').value;
+            let fill = document.getElementById('meter-fill');
+            let feedback = document.getElementById('pwdFeedback');
+            let strength = 0;
+
+            if(val.length > 8) strength += 25;
+            if(/[A-Z]/.test(val)) strength += 25;
+            if(/[0-9]/.test(val)) strength += 25;
+            if(/[^A-Za-z0-9]/.test(val)) strength += 25;
+
+            fill.style.width = strength + '%';
+            if(strength < 50) { fill.style.background = 'red'; feedback.innerText = 'ضعيفة جداً'; }
+            else if(strength < 100) { fill.style.background = 'orange'; feedback.innerText = 'متوسطة - أضف رموزاً وأرقاماً'; }
+            else { fill.style.background = 'green'; feedback.innerText = 'قوية جداً ومؤمنة'; }
+        }
+    </script>
+</body>
+</html>
