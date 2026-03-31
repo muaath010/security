@@ -3,234 +3,458 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المختبر السيبراني التعليمي</title>
+    <title>المختبر السيبراني التفاعلي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --neon-green: #00ffcc;
-            --cyber-blue: #0a84ff;
-            --danger-red: #ff3b30;
-            --dark-bg: #050a0f;
-            --card-bg: #111a24;
-            --text-gray: #b0b8c1;
+            --bg-dark: #070b14;
+            --panel-bg: rgba(15, 23, 42, 0.7);
+            --neon-cyan: #00f2fe;
+            --neon-purple: #4facfe;
+            --danger: #ff4b4b;
+            --success: #00e676;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(0, 242, 254, 0.3);
         }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--dark-bg);
-            color: white;
+
+        * {
+            box-sizing: border-box;
             margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(79, 172, 254, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(0, 242, 254, 0.08), transparent 25%);
+            color: var(--text-main);
             display: flex;
             min-height: 100vh;
+            overflow-x: hidden;
         }
-        /* Sidebar Navigation */
+
+        /* شريط التنقل */
         nav {
-            width: 250px;
-            background-color: #0d141d;
-            border-left: 1px solid #1e2a38;
-            padding: 20px;
+            width: 280px;
+            background: rgba(10, 15, 28, 0.95);
+            backdrop-filter: blur(10px);
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 30px 20px;
             position: fixed;
             height: 100%;
+            z-index: 100;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.5);
+            transition: 0.3s ease;
         }
-        nav h2 { color: var(--neon-green); font-size: 1.2rem; margin-bottom: 30px; border-bottom: 1px solid; }
+
+        .logo-area {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-area h2 {
+            background: linear-gradient(to right, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
         nav a {
-            display: block;
-            color: var(--text-gray);
-            padding: 12px;
+            display: flex;
+            align-items: center;
+            color: var(--text-muted);
+            padding: 12px 15px;
             text-decoration: none;
-            border-radius: 5px;
-            margin-bottom: 8px;
-            transition: 0.3s;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            right: 0; top: 0; height: 100%; width: 3px;
+            background: var(--neon-cyan);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
         nav a:hover, nav a.active {
-            background-color: var(--cyber-blue);
             color: white;
+            background: rgba(255, 255, 255, 0.05);
+            padding-right: 25px;
         }
 
-        /* Main Content Area */
+        nav a:hover::before, nav a.active::before {
+            transform: scaleY(1);
+        }
+
+        /* منطقة المحتوى */
         main {
-            margin-right: 250px;
-            padding: 40px;
-            width: 100%;
+            margin-right: 280px;
+            padding: 40px 5%;
+            width: calc(100% - 280px);
+            position: relative;
         }
-        section { display: none; animation: fadeIn 0.5s; }
-        section.active { display: block; }
 
+        section {
+            display: none;
+        }
+
+        section.active {
+            display: block;
+            animation: slideFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideFadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-title {
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .header-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px; right: 0; width: 50%; height: 3px;
+            background: linear-gradient(to left, var(--neon-cyan), transparent);
+            border-radius: 2px;
+        }
+
+        /* البطاقات وتأثير الزجاج */
         .card {
-            background: var(--card-bg);
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--border-glow);
+        }
+
+        p, li { line-height: 1.8; margin-bottom: 15px; color: var(--text-muted); }
+        h3, h4 { color: white; margin-bottom: 15px; }
+
+        /* أدوات المحاكاة */
+        .simulator {
+            background: rgba(0, 0, 0, 0.4);
             padding: 25px;
             border-radius: 12px;
-            border: 1px solid #1e2a38;
-            margin-bottom: 20px;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
         }
-        h1, h2 { color: var(--neon-green); }
 
-        /* Simulation Tools */
-        .simulator {
-            background: #000;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px dashed var(--cyber-blue);
-            margin-top: 15px;
+        .simulator::before {
+            content: ''; position: absolute; top: 0; right: 0; width: 4px; height: 100%;
+            background: var(--neon-purple);
         }
+
         input {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            background: #1a1a1a;
-            border: 1px solid #333;
+            padding: 12px 15px;
+            margin: 10px 0 20px 0;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: white;
-            border-radius: 4px;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: 0.3s;
+            outline: none;
         }
+
+        input:focus {
+            border-color: var(--neon-cyan);
+            background: rgba(0, 242, 254, 0.05);
+        }
+
         .btn {
-            background: var(--neon-green);
-            color: black;
+            background: linear-gradient(45deg, var(--neon-purple), var(--neon-cyan));
+            color: #000;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 25px;
             cursor: pointer;
-            font-weight: bold;
-            border-radius: 4px;
+            font-weight: 800;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
         }
 
-        /* Password Strength Meter */
-        #meter { height: 10px; width: 100%; background: #333; margin-top: 5px; border-radius: 5px; }
-        #meter-fill { height: 100%; width: 0%; transition: 0.5s; border-radius: 5px; }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.6);
+        }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
+        .btn-danger { background: var(--danger); box-shadow: 0 0 15px rgba(255, 75, 75, 0.3); color: white; }
+        .btn-danger:hover { box-shadow: 0 0 25px rgba(255, 75, 75, 0.6); background: #ff3333; }
+
+        /* شريط كلمة المرور */
+        #meter { height: 8px; width: 100%; background: rgba(255,255,255,0.1); margin-top: -5px; border-radius: 10px; overflow: hidden; }
+        #meter-fill { height: 100%; width: 0%; transition: width 0.5s ease, background-color 0.5s ease; border-radius: 10px; }
+
+        /* الإعلان الزائف */
         .fake-ad {
-            border: 2px solid gold;
-            padding: 15px;
+            border: 2px dashed #ffd700;
+            padding: 20px;
             text-align: center;
-            background: linear-gradient(45deg, #222, #444);
+            background: repeating-linear-gradient(45deg, rgba(255, 215, 0, 0.05), rgba(255, 215, 0, 0.05) 10px, transparent 10px, transparent 20px);
+            border-radius: 12px;
             cursor: pointer;
+            transition: 0.3s;
         }
+        .fake-ad:hover { transform: scale(1.02); background-color: rgba(255, 215, 0, 0.1); }
+
+        /* شاشات الهواتف */
+        @media (max-width: 850px) {
+            body { flex-direction: column; }
+            nav { width: 100%; height: auto; position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 20px; border-left: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .logo-area { width: 100%; margin-bottom: 15px; padding-bottom: 10px; }
+            nav a { margin: 0; padding: 8px 15px; font-size: 0.9rem; }
+            main { margin-right: 0; width: 100%; padding: 20px; }
+        }
+
+        /* نافذة التنبيهات (Modal) */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+            justify-content: center; align-items: center; z-index: 1000;
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .modal.show { display: flex; opacity: 1; }
+        .modal-content {
+            background: var(--panel-bg); border: 1px solid var(--neon-cyan);
+            padding: 30px; border-radius: 16px; text-align: center; max-width: 400px;
+            transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .modal.show .modal-content { transform: scale(1); }
     </style>
 </head>
 <body>
 
     <nav>
-        <h2>المختبر السيبراني</h2>
+        <div class="logo-area">
+            <h2>المختبر السيبراني</h2>
+        </div>
         <a href="#" onclick="showSection('home')" class="active">الرئيسية</a>
         <a href="#" onclick="showSection('social')">الهندسة الاجتماعية</a>
         <a href="#" onclick="showSection('deepfake')">التزييف العميق</a>
         <a href="#" onclick="showSection('phishing')">التصيد الاحتيالي</a>
         <a href="#" onclick="showSection('passwords')">كلمات المرور</a>
         <a href="#" onclick="showSection('links')">أنواع الروابط</a>
-        <a href="#" onclick="showSection('hacking')">كيف يتم الاختراق؟</a>
+        <a href="#" onclick="showSection('hacking')">مراحل الاختراق</a>
         <a href="#" onclick="showSection('ads')">الإعلانات الزائفة</a>
+        <a href="#" onclick="showSection('ctf')" style="color: #ffd700;">تحدي الهاكر (CTF)</a>
     </nav>
 
     <main>
         <section id="home" class="active">
-            <h1>مرحباً بك في أسبوع الأمن السيبراني</h1>
-            <p>هذا الموقع صُمم خصيصاً لمجتمعنا المدرسي لنقل الوعي من "النظرية" إلى "التطبيق". استخدم القائمة الجانبية لاستكشاف المعامل الافتراضية.</p>
+            <h1 class="header-title">مرحباً بك في أسبوع الأمن السيبراني</h1>
             <div class="card">
-                <h3>إحصائية سريعة</h3>
-                <p>95% من حوادث الأمن السيبراني سببها الخطأ البشري. كن أنت الحصن المنيع.</p>
+                <h3>وعيك هو جدار الحماية الأول</h3>
+                <p>هذا الموقع صُمم خصيصاً لمجتمعنا المدرسي لنقل الوعي من "النظرية" إلى "التطبيق". استخدم القائمة للتنقل بين المعامل الافتراضية واستكشاف التهديدات الرقمية بواقعية.</p>
+            </div>
+            <div class="card">
+                <h3 style="color: var(--danger)">إحصائية هامة</h3>
+                <p>أكثر من 90% من الاختراقات الناجحة لا تعتمد على ثغرات برمجية معقدة، بل تعتمد على استغلال "الخطأ البشري" والخداع النفسي.</p>
             </div>
         </section>
 
         <section id="social">
-            <h1>الهندسة الاجتماعية (فن اختراق البشر)</h1>
+            <h1 class="header-title">الهندسة الاجتماعية</h1>
             <div class="card">
-                <p>لا يحتاج المخترق دائماً لأكواد معقدة، أحياناً يحتاج فقط لاتصال هاتفي مقنع.</p>
+                <p>فن التلاعب بالبشر لإفشاء معلومات سرية. المخترق لا يكسر الباب، بل يقنعك بفتحه له.</p>
                 <div class="simulator">
                     <h4>محاكاة محادثة:</h4>
-                    <p style="color: #888;">[رسالة واتساب من رقم مجهول]</p>
-                    <p><strong>المهاجم:</strong> "أستاذي، أنا من الدعم الفني للمدرسة، نحتاج كود التحقق الذي وصلك الآن لتحديث نظام الغياب."</p>
-                    <button class="btn" onclick="alert('خطأ! كود التحقق سرّي للغاية ولا يطلبه الدعم الفني أبداً.')">إرسال الكود</button>
-                    <button class="btn" style="background:var(--danger-red)" onclick="alert('أحسنت! تجاهل الرسالة وإبلاغ الإدارة هو التصرف الصحيح.')">حظر وإبلاغ</button>
+                    <p style="color: #64748b; font-size: 0.9rem;">[رسالة واتساب من رقم مجهول]</p>
+                    <p style="color: white; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">
+                        <strong>المرسل:</strong> "أهلاً بك أستاذي، معك الدعم الفني للمدرسة، هناك خلل في حسابك بالبوابة ونحتاج لرمز التحقق (OTP) الذي وصلك الآن لتجنب إيقاف الحساب."
+                    </p>
+                    <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn" onclick="customAlert('خطأ فادح!', 'رموز التحقق سرية للغاية ولا يطلبها الدعم الفني أبداً. إعطاء الرمز يعني تسليم حسابك بالكامل.', 'error')">إرسال الرمز</button>
+                        <button class="btn btn-danger" onclick="customAlert('تصرف سليم!', 'حظر الرقم وتجاهل الرسالة هو الإجراء الصحيح. الدعم الفني لا يطلب كلمات مرور أو رموز تحقق.', 'success')">حظر وإبلاغ</button>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="deepfake">
-            <h1>التزييف العميق (Deepfake)</h1>
+            <h1 class="header-title">التزييف العميق (Deepfake)</h1>
             <div class="card">
-                <p>باستخدام الذكاء الاصطناعي، يمكن تزييف الفيديوهات والأصوات بدقة مرعبة.</p>
+                <p>استخدام الذكاء الاصطناعي لتزييف مقاطع الفيديو والصوتيات ليبدو الشخص وكأنه يقول أو يفعل ما لم يقم به قط.</p>
                 <div class="simulator">
-                    <h4>كيف تكتشف التزييف؟</h4>
-                    <ul>
-                        <li>لاحظ حركة العين (غالباً لا يرمشون بشكل طبيعي).</li>
-                        <li>دقق في حواف الوجه والرقبة.</li>
-                        <li>الصوت قد يبدو آلياً أو به تقطيع غير منطقي.</li>
+                    <h4>كيف تكتشف المحتوى المزيف؟</h4>
+                    <ul style="padding-right: 20px;">
+                        <li><strong>حركة العين:</strong> الرمش قد يكون بطيئاً أو غير طبيعي.</li>
+                        <li><strong>حواف الوجه:</strong> تشوه طفيف عند التقاء الوجه بالشعر أو الرقبة.</li>
+                        <li><strong>الصوت:</strong> نبرة آلية، أو عدم تطابق حركة الشفاه مع مخارج الحروف.</li>
                     </ul>
-                    <p><strong>تحدي:</strong> هل تستطيع التمييز بين صورة حقيقية وصورة مولدة بالذكاء الاصطناعي؟ (قريباً في ورشة العمل الميدانية).</p>
                 </div>
             </div>
         </section>
 
         <section id="phishing">
-            <h1>التصيد الاحتيالي (Phishing)</h1>
+            <h1 class="header-title">التصيد الاحتيالي (Phishing)</h1>
             <div class="card">
-                <p>صفحات تسجيل دخول مطابقة للأصل، لكنها تسرق بياناتك.</p>
+                <p>إنشاء صفحات مزيفة مطابقة للمواقع الرسمية لسرقة بيانات الدخول.</p>
                 <div class="simulator">
-                    <h4>فخ تسجيل الدخول:</h4>
-                    <label>البريد الإلكتروني الوزاري:</label>
-                    <input type="text" placeholder="user@moe.om">
-                    <label>كلمة المرور:</label>
-                    <input type="password" placeholder="******">
-                    <button class="btn" onclick="showPhishAlert()">دخول</button>
+                    <h4 style="color: var(--danger);">تحذير: هذا مجرد محاكي، لا تدخل بيانات حقيقية.</h4>
+                    <label style="color: var(--text-muted); font-size: 0.9rem;">البريد الإلكتروني:</label>
+                    <input type="text" placeholder="example@moe.om">
+                    <label style="color: var(--text-muted); font-size: 0.9rem;">كلمة المرور:</label>
+                    <input type="password" placeholder="********">
+                    <button class="btn" onclick="customAlert('وقعت في الفخ!', 'بمجرد النقر هنا، تم إرسال بياناتك لخادم المخترق. تأكد دائماً من الرابط (URL) قبل تسجيل الدخول.', 'error')">تسجيل الدخول</button>
                 </div>
             </div>
         </section>
 
         <section id="passwords">
-            <h1>مقياس قوة كلمة المرور</h1>
+            <h1 class="header-title">مقياس قوة كلمة المرور</h1>
             <div class="card">
-                <p>اختبر كلمة مرورك (المحاكاة لا تحفظ البيانات):</p>
-                <input type="text" id="pwdInput" oninput="checkPass()" placeholder="اكتب كلمة مرور تجريبية هنا...">
+                <p>أدخل كلمة مرور عشوائية لترى كيف يحللها النظام (يتم التحليل محلياً ولا يتم حفظ شيء):</p>
+                <input type="text" id="pwdInput" oninput="checkPass()" placeholder="اكتب كلمة المرور هنا...">
                 <div id="meter"><div id="meter-fill"></div></div>
-                <p id="pwdFeedback"></p>
+                <p id="pwdFeedback" style="margin-top: 15px; font-weight: bold;"></p>
             </div>
         </section>
 
         <section id="links">
-            <h1>أنواع الروابط (أين سيأخذك هذا الرابط؟)</h1>
+            <h1 class="header-title">فحص الروابط الخبيثة</h1>
             <div class="card">
-                <p>المخترق يستخدم روابط مخفية. مرر الفأرة (أو اضغط) لترى الفرق:</p>
+                <p>المخترق قد يخفي الرابط الحقيقي تحت نص بريء.</p>
                 <div class="simulator">
-                    <a href="#" style="color:var(--cyber-blue)" onclick="alert('الحقيقة: هذا الرابط يؤدي إلى موقع: malicious-site.com/hack')">www.moe.gov.om/portal</a>
-                    <p><small>(في المتصفح، انظر دائماً لأسفل الشاشة لترى الرابط الحقيقي قبل النقر)</small></p>
+                    <h4>مرر الفأرة فوق الرابط التالي ولاحظ أين يشير في أسفل المتصفح:</h4>
+                    <div style="margin: 20px 0;">
+                        <a href="http://malicious-site.com/steal-data" style="color: var(--neon-cyan); font-size: 1.2rem; font-weight: bold; text-decoration: underline;" onclick="event.preventDefault(); customAlert('تنبيه!', 'النص المكتوب كان البوابة الرسمية، لكن الرابط الفعلي كان يؤدي لموقع خبيث.', 'error')">البوابة التعليمية - تسجيل الدخول</a>
+                    </div>
+                    <p style="font-size: 0.9rem;">في الهواتف، اضغط مطولاً على الرابط لرؤية الوجهة الحقيقية قبل فتحه.</p>
                 </div>
             </div>
         </section>
 
         <section id="hacking">
-            <h1>رحلة الهجوم السيبراني</h1>
+            <h1 class="header-title">مراحل الاختراق</h1>
             <div class="card">
-                <ol>
-                    <li><strong>الاستطلاع:</strong> جمع معلومات عنك من وسائل التواصل.</li>
-                    <li><strong>التسلل:</strong> إرسال رابط أو ملف ملغوم.</li>
-                    <li><strong>الاستغلال:</strong> السيطرة على الجهاز وسرقة الملفات.</li>
-                </ol>
-                <p style="color:var(--danger-red)"><strong>الوقاية:</strong> تحديث البرامج، تفعيل التحقق الثنائي (2FA).</p>
+                <ul style="list-style: none;">
+                    <li style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">
+                        <strong style="color: var(--neon-cyan)">1. الاستطلاع (Reconnaissance):</strong> جمع بيانات الضحية من مواقع التواصل (الاسم، العمل، الاهتمامات).
+                    </li>
+                    <li style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">
+                        <strong style="color: var(--neon-purple)">2. التسليح (Weaponization):</strong> تجهيز ملف ملغوم أو رابط خبيث بناءً على اهتمامات الضحية.
+                    </li>
+                    <li style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">
+                        <strong style="color: var(--danger)">3. الاستغلال (Exploitation):</strong> إرسال الرابط، وبمجرد نقر الضحية عليه، يتم زرع البرمجية الخبيثة.
+                    </li>
+                </ul>
             </div>
         </section>
 
         <section id="ads">
-            <h1>الإعلانات الزائفة (الربح الوهمي)</h1>
+            <h1 class="header-title">الإعلانات الزائفة (Adware)</h1>
             <div class="card">
-                <p>تظهر هذه الإعلانات في المواقع غير الموثوقة:</p>
-                <div class="fake-ad" onclick="alert('فخ! الضغط هنا قد يحمل برمجية خبيثة (Adware) على جهازك.')">
-                    <h2 style="color:gold">مبروك! أنت الزائر رقم مليون 🏆</h2>
-                    <p>لقد ربحت هاتف iPhone 15 Pro Max. اضغط لاستلام جائزتك!</p>
+                <p>النقر على النوافذ المنبثقة المغرية هو أسرع طريق لتحميل برمجيات الفدية (Ransomware).</p>
+                <div class="fake-ad" onclick="customAlert('فخ الإعلانات!', 'الجوائز المجانية على الإنترنت غالباً ما تكون طُعماً لاختراق جهازك أو سرقة بياناتك البنكية.', 'error')">
+                    <h2 style="color: #ffd700; margin-bottom: 10px;">🎉 مبروك! أنت الزائر المحظوظ 🎉</h2>
+                    <p style="color: white; font-weight: bold;">لقد ربحت جهاز محمول جديد، اضغط هنا فوراً لاستلام جائزتك قبل انتهاء الوقت!</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="ctf">
+            <h1 class="header-title" style="color: #ffd700;">تحدي الهاكر (Capture The Flag)</h1>
+            <div class="card" style="border-color: rgba(255, 215, 0, 0.3);">
+                <p>العب دور الهاكر الأخلاقي! ابحث عن الثغرات لتعرف كيف يفكر المهاجمون.</p>
+
+                <div class="simulator" style="border-color: rgba(255, 215, 0, 0.5);">
+                    <h4 style="color: #ffd700;">المستوى 1: أسرار المطورين (Inspect Element)</h4>
+                    <p>المبرمج ترك "العلم" (كلمة سرية) عن طريق الخطأ كملاحظة مخفية في كود هذه الصفحة. اضغط بزر الفأرة الأيمن ثم <strong>"فحص" (Inspect)</strong> وابحث في عناصر HTML.</p>
+                    
+                    <input type="text" id="flag1Input" placeholder="أدخل العلم هنا...">
+                    <button class="btn" style="background: linear-gradient(45deg, #d4af37, #ffd700);" onclick="checkFlag1()">تحقق من العلم</button>
+                    <p id="flag1Result" style="margin-top: 15px; font-weight: bold;"></p>
+                </div>
+
+                <div class="simulator" style="border-color: rgba(255, 215, 0, 0.5); margin-top: 20px;">
+                    <h4 style="color: #ffd700;">المستوى 2: الشفرة المكشوفة (Source Code)</h4>
+                    <p>المبرمج كتب كلمة مرور الإدارة داخل ملف الجافاسكربت. ابحث في الأكواد البرمجية (Script) أسفل الصفحة لإيجادها.</p>
+                    
+                    <input type="password" id="flag2Input" placeholder="كلمة المرور...">
+                    <button class="btn" style="background: linear-gradient(45deg, #d4af37, #ffd700);" onclick="checkFlag2()">اختراق النظام</button>
+                    <p id="flag2Result" style="margin-top: 15px; font-weight: bold;"></p>
                 </div>
             </div>
         </section>
     </main>
 
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle" style="margin-bottom: 15px; font-size: 1.5rem;"></h3>
+            <p id="modalText" style="color: var(--text-main); margin-bottom: 25px;"></p>
+            <button class="btn" onclick="closeModal()">حسناً، فهمت</button>
+        </div>
+    </div>
+
     <script>
+        // دالة التنقل بين الأقسام بحركات سلسة
         function showSection(id) {
-            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+            document.querySelectorAll('section').forEach(s => {
+                s.classList.remove('active');
+            });
+            document.querySelectorAll('nav a').forEach(a => {
+                a.classList.remove('active');
+            });
+            
             document.getElementById(id).classList.add('active');
-            event.target.classList.add('active');
+            event.currentTarget.classList.add('active');
+            
+            // تمرير الشاشة للأعلى في الهواتف
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function showPhishAlert() {
-            alert('⚠️ تنبيه أمني: بمجرد إدخال بياناتك هنا، أصبحت كلمة مرورك في يد المخترق! لاحظ أن رابط الموقع بالأعلى ليس الرابط الرسمي للوزارة.');
+        // دالة التنبيهات المخصصة
+        function customAlert(title, text, type) {
+            const modal = document.getElementById('customModal');
+            const mTitle = document.getElementById('modalTitle');
+            
+            mTitle.innerText = title;
+            document.getElementById('modalText').innerText = text;
+            
+            if(type === 'error') {
+                mTitle.style.color = 'var(--danger)';
+            } else {
+                mTitle.style.color = 'var(--success)';
+            }
+            
+            modal.classList.add('show');
         }
 
+        function closeModal() {
+            document.getElementById('customModal').classList.remove('show');
+        }
+
+        // مقياس قوة كلمة المرور
         function checkPass() {
             let val = document.getElementById('pwdInput').value;
             let fill = document.getElementById('meter-fill');
@@ -243,9 +467,53 @@
             if(/[^A-Za-z0-9]/.test(val)) strength += 25;
 
             fill.style.width = strength + '%';
-            if(strength < 50) { fill.style.background = 'red'; feedback.innerText = 'ضعيفة جداً'; }
-            else if(strength < 100) { fill.style.background = 'orange'; feedback.innerText = 'متوسطة - أضف رموزاً وأرقاماً'; }
-            else { fill.style.background = 'green'; feedback.innerText = 'قوية جداً ومؤمنة'; }
+            
+            if(val.length === 0) {
+                fill.style.width = '0%';
+                feedback.innerText = '';
+            } else if(strength < 50) { 
+                fill.style.backgroundColor = 'var(--danger)'; 
+                feedback.innerText = 'كلمة مرور ضعيفة جداً يسهل تخمينها.';
+                feedback.style.color = 'var(--danger)';
+            } else if(strength < 100) { 
+                fill.style.backgroundColor = '#ffd700'; 
+                feedback.innerText = 'متوسطة. ينقصك إضافة رموز خاصة وحروف كبيرة.';
+                feedback.style.color = '#ffd700';
+            } else { 
+                fill.style.backgroundColor = 'var(--success)'; 
+                feedback.innerText = 'ممتاز! كلمة مرور قوية.';
+                feedback.style.color = 'var(--success)';
+            }
+        }
+
+        // دوال تحدي الهاكر (CTF)
+        function checkFlag1() {
+            let input = document.getElementById('flag1Input').value.trim();
+            let result = document.getElementById('flag1Result');
+            
+            if (input === "{CYBER_OMAN_2026}" || input === "CYBER_OMAN_2026") {
+                result.innerText = "✅ اختراق ناجح! لقد تعلمت قراءة الأكواد المخفية.";
+                result.style.color = "var(--success)";
+            } else {
+                result.innerText = "❌ إجابة خاطئة، ابحث عن تعليقات المبرمجين في كود HTML.";
+                result.style.color = "var(--danger)";
+            }
+        }
+
+        function checkFlag2() {
+            let pwd = document.getElementById('flag2Input').value.trim();
+            let result = document.getElementById('flag2Result');
+            
+            // الثغرة البرمجية المقصودة (Hardcoded Password)
+            let secretPassword = "admin_school_2026";
+            
+            if (pwd === secretPassword) {
+                result.innerText = "✅ تم الدخول! الدرس: لا تضع بيانات حساسة كنص واضح في الأكواد.";
+                result.style.color = "var(--success)";
+            } else {
+                result.innerText = "❌ وصول مرفوض. تلميح: ابحث عن متغير باسم secretPassword في الجافاسكربت.";
+                result.style.color = "var(--danger)";
+            }
         }
     </script>
 </body>
